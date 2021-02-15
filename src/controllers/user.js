@@ -7,6 +7,7 @@ exports.signup = (req, res, next) => {
     email: req.body.email,
     token: jwt.sign("RANDOM_SECRET_KEY"),
     wordCounter: 0,
+    date: new Date(),
   });
   user
     .save()
@@ -14,15 +15,13 @@ exports.signup = (req, res, next) => {
     .catch((error) => res.status(400).json({ error }));
 };
 
-exports.login = (req, res, next) => {
+exports.justify = (req, res, next) => {
   User.findOne({ email: req.body.email })
-    .then((user) => {
-      if (!user) {
+    .then((email) => {
+      if (!email) {
         return res.status(401).json({ error: "Utilisateur non trouvé !" });
       }
       res.status(200).json({});
     })
     .catch((error) => res.status(500).json({ error }));
 };
-
-exports.justify = (req, res, next) => {};
